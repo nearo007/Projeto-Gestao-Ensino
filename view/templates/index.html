@@ -33,7 +33,7 @@
       <div class="alert alert-warning text-center shadow-sm">Nenhum usuário cadastrado ainda.</div>
     {% endif %}
 
-    <h1 class="text-center mb-4">Lista de Skills</h1>
+    <h1 class="text-center mb-4">Lista de Estudantes</h1>
 
     {% if users %}
       <div class="table-responsive">
@@ -42,49 +42,47 @@
             <tr>
               <th>ID</th>
               <th>Nome</th>
-              <th>Nível</th>
+              <th>Data de Nascimento</th>
             </tr>
           </thead>
           <tbody>
-            {% for skill in skills %}
+            {% for student in students %}
               <tr>
-                <td class="text-center">{{ skill.id }}</td>
-                <td>{{ skill.name }}</td>
-                <td>{{ skill.level }}</td>
+                <td class="text-center">{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.born_date }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
     {% else %}
-      <div class="alert alert-warning text-center shadow-sm">Nenhum usuário cadastrado ainda.</div>
+      <div class="alert alert-warning text-center shadow-sm">Nenhum estudante cadastrado ainda.</div>
     {% endif %}
 
-    <h1 class="text-center mb-4">Lista de Cargos</h1>
+    <h1 class="text-center mb-4">Lista de Classes</h1>
 
-    {% if roles %}
+    {% if users %}
       <div class="table-responsive">
         <table class="table table-hover table-bordered align-middle shadow-sm bg-white">
           <thead class="table-primary text-center">
             <tr>
               <th>ID</th>
               <th>Nome</th>
-              <th>skills</th>
             </tr>
           </thead>
           <tbody>
-            {% for role in roles %}
+            {% for classroom in classrooms %}
               <tr>
-                <td class="text-center">{{ role.id }}</td>
-                <td>{{ role.name }}</td>
-                <td>{{ role.skills }}</td>
+                <td class="text-center">{{ classroom.id }}</td>
+                <td>{{ classroom.name }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
     {% else %}
-      <div class="alert alert-warning text-center shadow-sm">Nenhum usuário cadastrado ainda.</div>
+      <div class="alert alert-warning text-center shadow-sm">Nenhum classe cadastrado ainda.</div>
     {% endif %}
   </main>
 {% endblock %}

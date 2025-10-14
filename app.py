@@ -2,8 +2,8 @@ from flask import Flask
 from config import Config
 
 from controllers.user_controller import user_bp
-from controllers.skill_controller import skill_bp
-from controllers.role_controller import role_bp
+from controllers.student_controller import student_bp
+from controllers.classroom_controller import classroom_bp
 
 import os
 from models import db
@@ -16,9 +16,8 @@ app.config.from_object(Config)
 
 # definindo as rotas
 app.register_blueprint(user_bp)
-app.register_blueprint(skill_bp)
-app.register_blueprint(role_bp)
-
+app.register_blueprint(student_bp)
+app.register_blueprint(classroom_bp)
 # inicializa o SQLAlchemy com a aplicação Flask
 db.init_app(app)
 
