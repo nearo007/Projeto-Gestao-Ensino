@@ -15,4 +15,4 @@ def add_classroom():
 
         return redirect("/")
 
-    return render_template("add_classroom.html")
+    return render_template("classroom/add_classroom.html")

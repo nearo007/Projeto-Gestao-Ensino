@@ -33,33 +33,6 @@
       <div class="alert alert-warning text-center shadow-sm">Nenhum usuário cadastrado ainda.</div>
     {% endif %}
 
-    <h1 class="text-center mb-4">Lista de Estudantes</h1>
-
-    {% if users %}
-      <div class="table-responsive">
-        <table class="table table-hover table-bordered align-middle shadow-sm bg-white">
-          <thead class="table-primary text-center">
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Data de Nascimento</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for student in students %}
-              <tr>
-                <td class="text-center">{{ student.id }}</td>
-                <td>{{ student.name }}</td>
-                <td>{{ student.born_date }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% else %}
-      <div class="alert alert-warning text-center shadow-sm">Nenhum estudante cadastrado ainda.</div>
-    {% endif %}
-
     <h1 class="text-center mb-4">Lista de Classes</h1>
 
     {% if users %}

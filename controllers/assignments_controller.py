@@ -23,4 +23,4 @@ def add_assignment():
 
         return redirect("/")
 
-    return render_template("add_assignment.html")
+    return render_template("assignment/add_assignment.html")
