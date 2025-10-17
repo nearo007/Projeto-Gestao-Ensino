@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint
-from models import db, User, Student, Classroom, Assignment
+from database import db
+from models import User, Student, Classroom, Assignment
 
 user_bp = Blueprint('user_bp', __name__)
 

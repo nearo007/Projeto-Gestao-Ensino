@@ -5,7 +5,7 @@ from controllers.user_controller import user_bp
 from controllers.teacher_controller import teacher_bp
 
 import os
-from models import db
+from models.teacher import db
 
 # instanciando o Flask, definindo templates
 app = Flask(__name__, template_folder=os.path.join('view', 'templates'))

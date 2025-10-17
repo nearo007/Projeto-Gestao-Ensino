@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash
-from models import db, Student, Classroom, Assignment
+from database import db
+from models import Student, Classroom, Assignment
 from datetime import datetime
 
 teacher_bp = Blueprint('teacher_bp', __name__)
