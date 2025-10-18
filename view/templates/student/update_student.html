@@ -1,17 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Adicionar Estudante
+    Editar Estudante
 {% endblock %}
 
 {% block content %}
-    <form action="update_student" method="post">
+    <form action="{{ url_for('teacher_bp.update_student', student_id=student.id) }}" method="post">
         <label for="name">Nome:</label>
-        <input type="text" name="name" id="name" required>
+        <input value="{{ student.name }}" type="text" name="name" id="name" required>
         
         <label for="born_date">Data de Nascimento:</label>
-        <input type="date" name="born_date" id="born_date" required>
+        <input value="{{ student_born_date }}" type="date" name="born_date" id="born_date" required>
         
-        <button type="submit">Adicionar Estudante</button>
+        <button type="submit">Editar Estudante</button>
     </form>
 {% endblock %}

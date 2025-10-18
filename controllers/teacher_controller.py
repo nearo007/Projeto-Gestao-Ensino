@@ -40,6 +40,29 @@ def delete_student(student_id):
     flash("Aluno removido com sucesso!", "success")
     return redirect(url_for("teacher_bp.manage_students"))
 
+@teacher_bp.route('/update_student/<int:student_id>', methods=['GET', 'POST'])
+def update_student(student_id):
+    student = Student.query.get(student_id)
+    
+    if not student:
+        flash("Algo deu errado.", "warning")
+        return redirect(url_for("teacher_bp.manage_students"))
+    
+    if request.method == 'POST':
+        student_name = request.form['name']
+        student_born_date_string = request.form['born_date']
+        student_born_date = datetime.strptime(student_born_date_string, '%Y-%m-%d').date()
+
+        student.name = student_name
+        student.born_date = student_born_date
+
+        db.session.commit()
+        flash("Aluno atualizado com sucesso!", "success")
+        return redirect(url_for("teacher_bp.manage_students"))
+        
+    student_born_date = student.born_date.strftime("%Y-%m-%d")
+    return render_template("student/update_student.html", student=student, student_born_date=student_born_date)
+
 # classroom
 @teacher_bp.route('/manage_classrooms', methods=['GET', 'POST'])
 def manage_classrooms():
