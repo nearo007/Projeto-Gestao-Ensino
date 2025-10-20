@@ -69,7 +69,9 @@ def update_student(student_id):
 # classroom
 @teacher_bp.route('/manage_classrooms', methods=['GET', 'POST'])
 def manage_classrooms():
-    pass
+    classrooms = Classroom.query.all()
+
+    return render_template("classroom/manage_classrooms.html", classrooms=classrooms)
 
 @teacher_bp.route('/create_classroom', methods=['GET', 'POST'])
 def create_classroom():
@@ -80,7 +82,7 @@ def create_classroom():
         db.session.add(new_classroom)
         db.session.commit()
 
-        return redirect("/")
+        return redirect(url_for("teacher_bp.manage_classrooms"))
 
     return render_template("classroom/create_classroom.html")
 

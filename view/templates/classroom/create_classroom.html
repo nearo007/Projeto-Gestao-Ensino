@@ -1,14 +1,30 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Adicionar Classe
+  Adicionar Turma
 {% endblock %}
 
 {% block content %}
-    <form action="add_classroom" method="post">
-        <label for="name">Nome:</label>
-        <input type="text" name="name" id="name" required>
-        
-        <button type="submit">Adicionar Classe</button>
-    </form>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h3 class="card-title text-center mb-4 fw-bold text-primary">Adicionar Turma</h3>
+            <form action="{{ url_for('teacher_bp.create_classroom') }}" method="post">
+              <div class="mb-3">
+                <label for="name" class="form-label">Nome</label>
+                <input type="text" class="form-control" name="name" id="name" required />
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <a href="{{ url_for('teacher_bp.manage_classrooms') }}" class="btn btn-outline-secondary">Voltar</a>
+                <button type="submit" class="btn btn-primary">Adicionar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
