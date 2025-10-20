@@ -31,13 +31,13 @@
               <td class="text-center">{{ classroom.id }}</td>
               <td>{{ classroom.name }}</td>
               <td class="text-center">
-                <a href="" 
+                <a href="{{ url_for('teacher_bp.update_classroom', classroom_id=classroom.id)}}"
                    class="text-primary" title="Editar">
                   <i class="bi bi-pencil-fill"></i>
                 </a>
               </td>
               <td class="text-center">
-                <a href=""
+                <a href="{{ url_for('teacher_bp.delete_classroom', classroom_id=classroom.id)}}"
                    onclick="return confirm('Tem certeza que deseja remover {{ classroom.name }}? Esta ação não pode ser desfeita.');"
                    class="text-danger" title="Remover">
                   <i class="bi bi-trash-fill"></i>

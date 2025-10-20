@@ -109,3 +109,36 @@ def create_assignments():
         return redirect("/")
 
     return render_template("assignment/create_assignments.html")
+
+@teacher_bp.route("/delete_classroom/<int:classroom_id>", methods=['GET'])
+def delete_classroom(classroom_id):
+    classroom = Classroom.query.get(classroom_id)
+
+    if not classroom:
+        flash("Turma não encontrada.", "warning")
+        return redirect(url_for("teacher_bp.manage_classrooms"))
+    
+    db.session.delete(classroom)
+    db.session.commit()
+    
+    flash("Aluno removido com sucesso!", "success")
+    return redirect(url_for("teacher_bp.manage_classrooms"))
+
+@teacher_bp.route('/update_classroom/<int:classroom_id>', methods=['GET', 'POST'])
+def update_classroom(classroom_id):
+    classroom = Classroom.query.get(classroom_id)
+    
+    if not classroom:
+        flash("Algo deu errado.", "warning")
+        return redirect(url_for("teacher_bp.manage_classrooms"))
+    
+    if request.method == 'POST':
+        classroom_name = request.form['name']
+        
+        classroom.name = classroom_name
+
+        db.session.commit()
+        flash("Turma atualizada com sucesso!", "success")
+        return redirect(url_for("teacher_bp.manage_classrooms"))
+        
+    return render_template("classroom/update_classroom.html", classroom=classroom)

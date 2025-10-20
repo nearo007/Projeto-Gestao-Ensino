@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Editar Turma
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4 fw-bold text-primary">Editar Turma</h3>
+          <form action="{{ url_for('teacher_bp.update_classroom', classroom_id=classroom.id) }}" method="post">
+            
+            <div class="mb-3">
+              <label for="name" class="form-label">Nome</label>
+              <input value="{{ classroom.name }}" type="text" class="form-control" name="name" id="name" required>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a href="{{ url_for('teacher_bp.manage_classrooms') }}" class="btn btn-outline-secondary">Voltar</a>
+              <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
