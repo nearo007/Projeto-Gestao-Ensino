@@ -67,7 +67,7 @@ def update_student(student_id):
     return render_template("student/update_student.html", student=student, student_born_date=student_born_date)
 
 # classroom
-@teacher_bp.route('/manage_classrooms', methods=['GET', 'POST'])
+@teacher_bp.route('/manage_classrooms', methods=['GET'])
 def manage_classrooms():
     classrooms = Classroom.query.all()
 
@@ -85,30 +85,6 @@ def create_classroom():
         return redirect(url_for("teacher_bp.manage_classrooms"))
 
     return render_template("classroom/create_classroom.html")
-
-# assignments
-@teacher_bp.route('/manage_assignments', methods=['GET', 'POST'])
-def manage_assignments():
-    pass
-
-@teacher_bp.route('/create_assignments', methods=['GET', 'POST'])
-def create_assignments():
-    if request.method == 'POST':
-        name = request.form['name']
-        grade_worth = request.form['grade_worth']
-        due_date_string = request.form['due_date']
-        due_date = datetime.strptime(due_date_string, '%Y-%m-%d').date()
-
-        # TODO skill
-        #skill = Skill(name="java", level=5)
-
-        new_assignment = Assignment(name=name, grade_worth=grade_worth, due_date=due_date)
-        db.session.add(new_assignment)
-        db.session.commit()
-
-        return redirect("/")
-
-    return render_template("assignment/create_assignments.html")
 
 @teacher_bp.route("/delete_classroom/<int:classroom_id>", methods=['GET'])
 def delete_classroom(classroom_id):
@@ -142,3 +118,45 @@ def update_classroom(classroom_id):
         return redirect(url_for("teacher_bp.manage_classrooms"))
         
     return render_template("classroom/update_classroom.html", classroom=classroom)
+
+# assignments
+@teacher_bp.route('/manage_assignments', methods=['GET', 'POST'])
+def manage_assignments():
+    assignments = Assignment.query.all()
+
+    for assignment in assignments:
+        assignment.due_date = assignment.due_date.strftime("%d/%m/%Y")
+
+    return render_template("assignment/manage_assignments.html", assignments=assignments)
+    
+
+@teacher_bp.route('/create_assignment', methods=['GET', 'POST'])
+def create_assignment():
+    if request.method == 'POST':
+        name = request.form['name']
+        grade_worth = request.form['grade_worth']
+        due_date_string = request.form['due_date']
+        due_date = datetime.strptime(due_date_string, '%Y-%m-%d').date()
+
+        new_assignment = Assignment(name=name, grade_worth=grade_worth, due_date=due_date)
+        db.session.add(new_assignment)
+        db.session.commit()
+
+        return redirect(url_for("teacher_bp.manage_assignments"))
+
+    return render_template("assignment/create_assignment.html")
+
+@teacher_bp.route("/delete_assignment/<int:assignment_id>", methods=['GET'])
+def delete_assignment(assignment_id):
+    assignment = Assignment.query.get(assignment_id)
+
+    if not assignment_id:
+        flash("Tarefa não encontrada.", "warning")
+        return redirect(url_for("teacher_bp.manage_assignments"))
+    
+    db.session.delete(assignment)
+    db.session.commit()
+
+    return redirect(url_for("teacher_bp.manage_assignments"))
+
+# @teacher_bp.route("/update_student")
