@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Blueprint
+from flask import render_template, request, redirect, url_for, Blueprint, session
 from extensions import db, bcrypt
 from models import User, Student, Classroom, Assignment
 
@@ -38,6 +38,11 @@ def login():
         user = User.query.filter_by(name=name).first()
 
         if user and bcrypt.check_password_hash(user.password, password):
+            session['logged_in'] = True
+            session['user_id'] = user.id
+            session['user_name'] = user.name
+            session['user_role'] = user.role
+
             return redirect(url_for("user_bp.index"))
         
         else:
@@ -45,3 +50,11 @@ def login():
 
 
     return render_template("login.html")
+
+@user_bp.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    session.pop('user_id', None)
+    session.pop('user_role', None)
+    # TODO flash message
+    return redirect(url_for("user_bp.index"))

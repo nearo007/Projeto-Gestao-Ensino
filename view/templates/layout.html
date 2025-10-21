@@ -22,8 +22,13 @@
         <a class="btn btn-outline-light" href="/manage_students">Estudantes</a>
         <a class="btn btn-outline-light" href="/manage_classrooms">Turmas</a>
         <a class="btn btn-outline-light" href="/manage_assignments">Atividades</a>
-        <a class="btn btn-outline-light" href="/register">Cadastrar</a>
-        <a class="btn btn-outline-light" href="/login">Entrar</a>
+
+        {% if session.logged_in %}
+          <a class="btn btn-outline-light" href="/logout">Sair</a>
+        {% else %}
+          <a class="btn btn-outline-light" href="/register">Cadastrar</a>
+          <a class="btn btn-outline-light" href="/login">Entrar</a>
+        {% endif %}
       </div>
     </nav>
 
