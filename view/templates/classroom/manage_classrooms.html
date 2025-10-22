@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Lista de Turmas
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 1000px;">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold text-primary m-0">Lista de Turmas</h1>
+    <a href="{{ url_for('teacher_bp.create_classroom') }}" class="btn btn-success d-flex align-items-center shadow-sm">
+      <i class="bi bi-person-plus me-2"></i> Adicionar
+    </a>
+  </div>
+
+  {% if classrooms %}
+    <div class="table-responsive shadow-sm rounded">
+      <table class="table table-hover table-bordered align-middle bg-white mb-0">
+        <thead class="table-primary text-center">
+          <tr>
+            <th style="width: 10%">ID</th>
+            <th style="width: 60%">Nome</th>
+            <th style="width: 15%">Editar</th>
+            <th style="width: 15%">Remover</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for classroom in classrooms %}
+            <tr>
+              <td class="text-center">{{ classroom.id }}</td>
+              <td>{{ classroom.name }}</td>
+              <td class="text-center">
+                <a href="{{ url_for('teacher_bp.update_classroom', classroom_id=classroom.id)}}"
+                   class="text-primary" title="Editar">
+                  <i class="bi bi-pencil-fill"></i>
+                </a>
+              </td>
+              <td class="text-center">
+                <a href="{{ url_for('teacher_bp.delete_classroom', classroom_id=classroom.id)}}"
+                   onclick="return confirm('Tem certeza que deseja remover {{ classroom.name }}? Esta ação não pode ser desfeita.');"
+                   class="text-danger" title="Remover">
+                  <i class="bi bi-trash-fill"></i>
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-warning text-center shadow-sm mt-4">
+      Nenhuma Turma cadastrada ainda.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
