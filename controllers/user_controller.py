@@ -29,29 +29,22 @@ def register():
         password = request.form['password']
         
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+            
+        verify_code = request.form['verify_code']
         
-        if role not in ['teacher', 'admin']:
-            new_user = User(name=name, email=email, password=password_hash)
-            db.session.add(new_user)
-            db.session.commit()
+        if not verify_code:
+            flash("O código de verificação é obrigatório!", "danger")
+            return redirect(url_for("user_bp.register"))
+        
+        elif role == 'teacher' and verify_code == TEACHER_REGISTER_CODE:
+            new_user = User(name=name, email=email, password=password_hash, role=role)
+            
+        elif role == 'admin' and verify_code == ADMIN_REGISTER_CODE:
+            new_user = User(name=name, email=email, password=password_hash, role=role)
         
         else:
-            verify_code = request.form['verify_code']
-            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-            
-            if not verify_code:
-                flash("O código é obrigatório para professores e administradores!", "danger")
-                return redirect(url_for("user_bp.register"))
-            
-            elif role == 'teacher' and verify_code == TEACHER_REGISTER_CODE:
-                new_user = User(name=name, email=email, password=password_hash, role=role)
-                
-            elif role == 'admin' and verify_code == ADMIN_REGISTER_CODE:
-                new_user = User(name=name, email=email, password=password_hash, role=role)
-            
-            else:
-                flash("O código de verificação está incorreto!", "danger")
-                return redirect(url_for("user_bp.register"))
+            flash("O código de verificação está incorreto!", "danger")
+            return redirect(url_for("user_bp.register"))
             
         db.session.add(new_user)
         db.session.commit()

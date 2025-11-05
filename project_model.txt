@@ -10,3 +10,10 @@ pode ser obter um json
 
 REMEMBER PASSWORD
 pode ser com localStorage()
+
+MUDANÇA
+Para simplificar, aluno não terá acesso ao sistema, é um controle fechado da instituição
+
+o administrador gerencia os alunos, turmas e professores
+
+os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que fazem parte da turma atrelada ao próprio professor
