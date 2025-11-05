@@ -53,6 +53,9 @@ def register():
 
 @user_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    if session.get('logged_in'):
+        return redirect(url_for("user_bp.index"))
+    
     if request.method == 'POST':
         name = request.form['name']
         password = request.form['password']
@@ -69,8 +72,7 @@ def login():
         
         else:
             return redirect(url_for("user_bp.login"))
-
-
+    
     return render_template("login.html")
 
 @user_bp.route('/logout')
