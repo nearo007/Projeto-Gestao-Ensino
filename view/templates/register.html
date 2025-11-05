@@ -49,6 +49,10 @@
           <input type="text" name="verify_code" id="verify-code" class="form-control" placeholder="Digite o código de verificação para registro" />
         </div>
 
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+          <p class="text-{{ category }} small m-0">{{ message }}</p>
+        {% endfor %}
+
         <div class="d-grid mt-4">
           <button type="submit" class="btn btn-success fw-semibold shadow-sm"><i class="bi bi-check2-circle me-2"></i> Cadastrar</button>
         </div>

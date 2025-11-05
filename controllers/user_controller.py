@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Blueprint, session
+from flask import render_template, request, redirect, url_for, Blueprint, session, flash
 from extensions import db, bcrypt
 from models import User, Student, Classroom, Assignment
 import os
@@ -28,9 +28,9 @@ def register():
         email = request.form['email']
         password = request.form['password']
         
+        password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        
         if role not in ['teacher', 'admin']:
-            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-
             new_user = User(name=name, email=email, password=password_hash)
             db.session.add(new_user)
             db.session.commit()
@@ -38,12 +38,20 @@ def register():
         else:
             verify_code = request.form['verify_code']
             password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-
-            if role == 'teacher' and verify_code == TEACHER_REGISTER_CODE:
+            
+            if not verify_code:
+                flash("O código é obrigatório para professores e administradores!", "danger")
+                return redirect(url_for("user_bp.register"))
+            
+            elif role == 'teacher' and verify_code == TEACHER_REGISTER_CODE:
                 new_user = User(name=name, email=email, password=password_hash, role=role)
                 
             elif role == 'admin' and verify_code == ADMIN_REGISTER_CODE:
                 new_user = User(name=name, email=email, password=password_hash, role=role)
+            
+            else:
+                flash("O código de verificação está incorreto!", "danger")
+                return redirect(url_for("user_bp.register"))
             
         db.session.add(new_user)
         db.session.commit()
@@ -61,16 +69,21 @@ def login():
         password = request.form['password']
 
         user = User.query.filter_by(name=name).first()
-
-        if user and bcrypt.check_password_hash(user.password, password):
+        
+        if user:
+            if not bcrypt.check_password_hash(user.password, password):
+                flash("Senha incorreta!", "danger")
+                return redirect(url_for("user_bp.login"))
+        
             session['logged_in'] = True
             session['user_id'] = user.id
             session['user_name'] = user.name
             session['user_role'] = user.role
 
             return redirect(url_for("user_bp.index"))
-        
+            
         else:
+            flash("Usuário não encontrado!", "danger")
             return redirect(url_for("user_bp.login"))
     
     return render_template("login.html")
