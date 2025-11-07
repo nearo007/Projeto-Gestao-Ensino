@@ -16,12 +16,13 @@
         <table class="table table-hover table-bordered align-middle bg-white mb-0">
           <thead class="table-primary text-center">
             <tr>
-              <th style="width: 10%">ID</th>
-              <th style="width: 35%">Nome</th>
+              <th style="width: 5%">ID</th>
+              <th style="width: 25%">Nome</th>
               <th style="width: 20%">Data de Nascimento</th>
               <th style="width: 20%">Turma</th>
-              <th style="width: 10%">Editar</th>
-              <th style="width: 10%">Remover</th>
+              <th style="width: 25%">Professores</th>
+              <th style="width: 5%">Editar</th>
+              <th style="width: 5%">Remover</th>
             </tr>
           </thead>
           <tbody>
@@ -29,8 +30,13 @@
               <tr>
                 <td class="text-center">{{ student.id }}</td>
                 <td>{{ student.name }}</td>
-                <td class="text-center">{{ student.born_date }}</td>
+                <td class="text-center">{{ student.born_date.strftime("%d/%m/%Y") }}</td>
                 <td class="text-center">{{ student.classroom.name }}</td>
+                <td class="text-center">
+                  {% for teacher in student.classroom.teachers %}
+                  {{ teacher.name }}
+                  {% endfor %}
+                </td>
                 <td class="text-center">
                   <a href="{{ url_for('admin_bp.update_student', student_id=student.id) }}" class="text-primary" title="Editar"><i class="bi bi-pencil-fill"></i></a>
                 </td>

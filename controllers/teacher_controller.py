@@ -12,9 +12,6 @@ teacher_bp = Blueprint('teacher_bp', __name__)
 def manage_assignments():
     assignments = Assignment.query.all()
 
-    for assignment in assignments:
-        assignment.due_date = assignment.due_date.strftime("%d/%m/%Y")
-
     return render_template("assignment/manage_assignments.html", assignments=assignments)
     
 @teacher_bp.route('/create_assignment', methods=['GET', 'POST'])
@@ -71,5 +68,5 @@ def update_assignment(assignment_id):
         flash("Tarefa atualizada com sucesso!", "success")
         return redirect(url_for("teacher_bp.manage_assignments"))
     
-    assignment_due_date = assignment.due_date.strftime('%Y-%m-%d')   
+    assignment_due_date = assignment.due_date.strftime('%Y-%m-%d')
     return render_template("assignment/update_assignment.html", assignment=assignment, assignment_due_date=assignment_due_date)

@@ -12,11 +12,9 @@ admin_bp = Blueprint('admin_bp', __name__)
 def manage_students():
     students = Student.query.all()
     classrooms = Classroom.query.all()
-    
-    for student in students:
-        student.born_date = student.born_date.strftime("%d/%m/%Y")
+    teachers = User.query.filter_by(role='teacher').all()
 
-    return render_template("student/manage_students.html", students=students, classrooms=classrooms)
+    return render_template("student/manage_students.html", students=students, classrooms=classrooms, teachers=teachers)
 
 @admin_bp.route('/create_student', methods=['GET', 'POST'])
 @role_required('admin')
