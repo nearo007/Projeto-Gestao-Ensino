@@ -86,5 +86,4 @@ def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)
     session.pop('user_role', None)
-    # TODO flash message
     return redirect(url_for("user_bp.index"))

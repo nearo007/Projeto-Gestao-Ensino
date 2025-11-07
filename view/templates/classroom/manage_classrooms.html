@@ -9,7 +9,7 @@
   
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="fw-bold text-primary m-0">Lista de Turmas</h1>
-    <a href="{{ url_for('teacher_bp.create_classroom') }}" class="btn btn-success d-flex align-items-center shadow-sm">
+    <a href="{{ url_for('admin_bp.create_classroom') }}" class="btn btn-success d-flex align-items-center shadow-sm">
       <i class="bi bi-person-plus me-2"></i> Adicionar
     </a>
   </div>
@@ -39,13 +39,13 @@
               </td>
 
               <td class="text-center">
-                <a href="{{ url_for('teacher_bp.update_classroom', classroom_id=classroom.id)}}"
+                <a href="{{ url_for('admin_bp.update_classroom', classroom_id=classroom.id)}}"
                    class="text-primary" title="Editar">
                   <i class="bi bi-pencil-fill"></i>
                 </a>
               </td>
               <td class="text-center">
-                <a href="{{ url_for('teacher_bp.delete_classroom', classroom_id=classroom.id)}}"
+                <a href="{{ url_for('admin_bp.delete_classroom', classroom_id=classroom.id)}}"
                    onclick="return confirm('Tem certeza que deseja remover {{ classroom.name }}? Esta ação não pode ser desfeita.');"
                    class="text-danger" title="Remover">
                   <i class="bi bi-trash-fill"></i>

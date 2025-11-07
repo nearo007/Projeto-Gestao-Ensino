@@ -4,6 +4,7 @@ import os
 from extensions import db, bcrypt
 from controllers.user_controller import user_bp
 from controllers.teacher_controller import teacher_bp
+from controllers.admin_controller import admin_bp
 
 
 # instanciando o Flask, definindo templates
@@ -15,6 +16,7 @@ app.config.from_object(Config)
 # definindo as rotas
 app.register_blueprint(user_bp)
 app.register_blueprint(teacher_bp)
+app.register_blueprint(admin_bp)
 
 # inicializa o SQLAlchemy, e Bcrypt com a aplicação Flask
 db.init_app(app)
