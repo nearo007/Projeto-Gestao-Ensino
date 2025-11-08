@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Detalhes da Turma
+{% endblock %}
+
+{% block content %}
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <i class="bi bi-journal-bookmark-fill text-primary" style="font-size: 3rem;"></i>
+      <h2 class="fw-bold mt-3">Detalhes da Turma</h2>
+      <p class="text-muted mb-0">Informações sobre a turma e seus participantes</p>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <h4 class="fw-semibold text-primary mb-3">{{ classroom.name }}</h4>
+
+        <div class="mb-4">
+          <h5 class="fw-semibold text-secondary mb-3"><i class="bi bi-person-vcard me-2"></i>Professores</h5>
+          {% if classroom.teachers %}
+            <ul class="list-group list-group-flush">
+              {% for teacher in classroom.teachers %}
+                <li class="list-group-item">{{ teacher.name }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">Nenhum professor atribuído.</p>
+          {% endif %}
+        </div>
+
+        <div>
+          <h5 class="fw-semibold text-secondary mb-3"><i class="bi bi-people-fill me-2"></i>Alunos</h5>
+          {% if classroom.students %}
+            <ul class="list-group list-group-flush">
+              {% for student in classroom.students %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ student.name }}
+                  <span class="badge bg-light text-secondary">
+                    {{ student.born_date.strftime('%d/%m/%Y') }}
+                  </span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">Nenhum aluno cadastrado nesta turma.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <a href="{{ url_for('teacher_bp.teacher_home') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Voltar
+      </a>
+    </div>
+  </div>
+{% endblock %}

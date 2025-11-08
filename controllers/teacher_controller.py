@@ -79,3 +79,9 @@ def teacher_home():
     teacher = User.query.get(session['user_id'])
     teacher_classrooms = teacher.classrooms
     return render_template('teacher_home.html', classrooms=classrooms, teacher_classrooms=teacher_classrooms)
+
+@teacher_bp.route('/classroom_details/<int:classroom_id>', methods=['GET'])
+@login_required
+def classroom_details(classroom_id):
+    classroom = Classroom.query.get(classroom_id)
+    return render_template('classroom/classroom_details.html', classroom=classroom)
