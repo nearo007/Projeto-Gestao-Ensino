@@ -1,8 +1,8 @@
 from datetime import date
 
-def get_age_range():
-    today = date.today()
+today = date.today()
 
+def get_age_range():
     min_year = today.year - 80
     max_year = today.year - 18
 
@@ -12,3 +12,11 @@ def get_age_range():
     age_range = [min_date, max_date]
     
     return age_range
+
+def get_assignment_range():
+    min_date = date(today.year, today.month, today.day).isoformat()
+    max_date = date(today.year, 12, 31).isoformat()
+    
+    data_range = [min_date, max_date]
+    
+    return data_range

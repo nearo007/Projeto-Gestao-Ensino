@@ -3,6 +3,7 @@ from extensions import db
 from models import Student, Classroom, Assignment, User
 from datetime import datetime
 from utils.decorators import login_required, role_required
+from utils.data_range import get_assignment_range
 
 teacher_bp = Blueprint('teacher_bp', __name__)
 
@@ -29,7 +30,8 @@ def create_assignment():
 
         return redirect(url_for("teacher_bp.manage_assignments"))
 
-    return render_template("assignment/create_assignment.html")
+    data_range = get_assignment_range()
+    return render_template("assignment/create_assignment.html", data_range=data_range)
 
 @teacher_bp.route("/delete_assignment/<int:assignment_id>", methods=['GET'])
 @login_required
@@ -67,7 +69,8 @@ def update_assignment(assignment_id):
         return redirect(url_for("teacher_bp.manage_assignments"))
     
     assignment_due_date = assignment.due_date.strftime('%Y-%m-%d')
-    return render_template("assignment/update_assignment.html", assignment=assignment, assignment_due_date=assignment_due_date)
+    data_range = get_assignment_range()
+    return render_template("assignment/update_assignment.html", assignment=assignment, assignment_due_date=assignment_due_date, data_range=data_range)
 
 # teacher home
 @teacher_bp.route('/teacher_home', methods=['GET'])
