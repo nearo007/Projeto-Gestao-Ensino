@@ -11,8 +11,6 @@ os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que faze
 *** IMPORTANTE ***
 adicionar verificação de email
 
-adicionar verificação de idade
-
 adicionar verificação data de entrega
 
 adicionar lembrar senha (pode ser com localStorage())

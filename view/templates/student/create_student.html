@@ -24,7 +24,7 @@
 
               <div class="mb-3">
                 <label for="born_date" class="form-label">Data de Nascimento</label>
-                <input type="date" class="form-control" name="born_date" id="born_date" required />
+                <input type="date" class="form-control" name="born_date" id="born_date" min="{{ age_range[0] }}" max="{{ age_range[1] }}"required />
               </div>
 
               <div class="mb-3">

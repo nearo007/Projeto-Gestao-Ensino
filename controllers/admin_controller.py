@@ -3,6 +3,7 @@ from extensions import db
 from models import Student, Classroom, Assignment, User
 from datetime import datetime
 from utils.decorators import role_required
+from utils.data_range import get_age_range
 
 admin_bp = Blueprint('admin_bp', __name__)
 
@@ -31,7 +32,8 @@ def create_student():
         return redirect(url_for("admin_bp.manage_students"))
 
     classrooms = Classroom.query.all()
-    return render_template("student/create_student.html", classrooms=classrooms)
+    age_range = get_age_range()
+    return render_template("student/create_student.html", classrooms=classrooms, age_range=age_range)
     
 @admin_bp.route('/delete_student/<int:student_id>', methods=['GET'])
 @role_required('admin')
@@ -72,7 +74,8 @@ def update_student(student_id):
         
     student_born_date = student.born_date.strftime("%Y-%m-%d")
     classrooms = Classroom.query.all()
-    return render_template("student/update_student.html", student=student, student_born_date=student_born_date, classrooms=classrooms)
+    age_range = get_age_range()
+    return render_template("student/update_student.html", student=student, student_born_date=student_born_date, classrooms=classrooms, age_range=age_range)
 
 # classroom
 @admin_bp.route('/manage_classrooms', methods=['GET'])
