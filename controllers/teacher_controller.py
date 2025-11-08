@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Blueprint, flash
+from flask import render_template, request, redirect, url_for, Blueprint, flash, session
 from extensions import db
 from models import Student, Classroom, Assignment, User
 from datetime import datetime
@@ -8,14 +8,14 @@ teacher_bp = Blueprint('teacher_bp', __name__)
 
 # assignments
 @teacher_bp.route('/manage_assignments', methods=['GET', 'POST'])
-@role_required('admin', 'teacher')
+@login_required
 def manage_assignments():
     assignments = Assignment.query.all()
 
     return render_template("assignment/manage_assignments.html", assignments=assignments)
     
 @teacher_bp.route('/create_assignment', methods=['GET', 'POST'])
-@role_required('admin', 'teacher')
+@login_required
 def create_assignment():
     if request.method == 'POST':
         name = request.form['name']
@@ -32,7 +32,7 @@ def create_assignment():
     return render_template("assignment/create_assignment.html")
 
 @teacher_bp.route("/delete_assignment/<int:assignment_id>", methods=['GET'])
-@role_required('admin', 'teacher')
+@login_required
 def delete_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
 
@@ -46,7 +46,7 @@ def delete_assignment(assignment_id):
     return redirect(url_for("teacher_bp.manage_assignments"))
 
 @teacher_bp.route("/update_assignment/<int:assignment_id>", methods=['GET', 'POST'])
-@role_required('admin', 'teacher')
+@login_required
 def update_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
 
@@ -70,3 +70,12 @@ def update_assignment(assignment_id):
     
     assignment_due_date = assignment.due_date.strftime('%Y-%m-%d')
     return render_template("assignment/update_assignment.html", assignment=assignment, assignment_due_date=assignment_due_date)
+
+# teacher home
+@teacher_bp.route('/teacher_home', methods=['GET'])
+@login_required
+def teacher_home():
+    classrooms = Classroom.query.all()
+    teacher = User.query.get(session['user_id'])
+    teacher_classrooms = teacher.classrooms
+    return render_template('teacher_home.html', classrooms=classrooms, teacher_classrooms=teacher_classrooms)

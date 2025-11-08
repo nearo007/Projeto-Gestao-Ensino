@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Bem vindo!
+{% endblock %}
+
+{% block content %}
+  <main class="container my-5">
+    <h1 class="text-center mb-4">{{ session.user_name }}, bem vindo!</h1>
+  </main>
+
+  {% if session.user_role == 'teacher' %}
+    {% for classroom in teacher_classrooms %}
+      <a href="">
+        <p>{{ classroom.name }}</p>
+      </a>
+    {% endfor %}
+
+  {% elif session.user_role == 'admin' %}
+    {% for classroom in classrooms %}
+      <a href="">
+        <p>{{ classroom.name }}</p>
+      </a>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
