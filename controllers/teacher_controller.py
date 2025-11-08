@@ -37,7 +37,6 @@ def delete_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
 
     if not assignment_id:
-        flash("Tarefa não encontrada.", "warning")
         return redirect(url_for("teacher_bp.manage_assignments"))
     
     db.session.delete(assignment)
@@ -51,7 +50,6 @@ def update_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
 
     if not assignment:
-        flash("Algo deu errado.", "warning")
 
     if request.method == 'POST':
         assignment_name = request.form['name']
@@ -65,7 +63,6 @@ def update_assignment(assignment_id):
         assignment.due_date = assignment_due_date
 
         db.session.commit()
-        flash("Tarefa atualizada com sucesso!", "success")
         return redirect(url_for("teacher_bp.manage_assignments"))
     
     assignment_due_date = assignment.due_date.strftime('%Y-%m-%d')

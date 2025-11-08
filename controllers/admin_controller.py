@@ -39,13 +39,11 @@ def delete_student(student_id):
     student = Student.query.get(student_id)
     
     if not student:
-        flash("Aluno não encontrado.", "warning")
         return redirect(url_for("admin_bp.manage_students"))
     
     db.session.delete(student)
     db.session.commit()
     
-    flash("Aluno removido com sucesso!", "success")
     return redirect(url_for("admin_bp.manage_students"))
 
 @admin_bp.route('/update_student/<int:student_id>', methods=['GET', 'POST'])
@@ -54,7 +52,6 @@ def update_student(student_id):
     student = Student.query.get(student_id)
     
     if not student:
-        flash("Algo deu errado.", "warning")
         return redirect(url_for("admin_bp.manage_students"))
     
     if request.method == 'POST':
@@ -71,7 +68,6 @@ def update_student(student_id):
         student.classroom = student_classroom
 
         db.session.commit()
-        flash("Aluno atualizado com sucesso!", "success")
         return redirect(url_for("admin_bp.manage_students"))
         
     student_born_date = student.born_date.strftime("%Y-%m-%d")
@@ -114,13 +110,11 @@ def delete_classroom(classroom_id):
     classroom = Classroom.query.get(classroom_id)
 
     if not classroom:
-        flash("Turma não encontrada.", "warning")
         return redirect(url_for("admin_bp.manage_classrooms"))
     
     db.session.delete(classroom)
     db.session.commit()
     
-    flash("Aluno removido com sucesso!", "success")
     return redirect(url_for("admin_bp.manage_classrooms"))
 
 @admin_bp.route('/update_classroom/<int:classroom_id>', methods=['GET', 'POST'])
@@ -129,7 +123,6 @@ def update_classroom(classroom_id):
     classroom = Classroom.query.get(classroom_id)
     
     if not classroom:
-        flash("Algo deu errado.", "warning")
         return redirect(url_for("admin_bp.manage_classrooms"))
     
     if request.method == 'POST':
@@ -144,7 +137,6 @@ def update_classroom(classroom_id):
             classroom.teachers.append(teacher)
 
         db.session.commit()
-        flash("Turma atualizada com sucesso!", "success")
         return redirect(url_for("admin_bp.manage_classrooms"))
     
     teachers = User.query.filter_by(role='teacher').all()
