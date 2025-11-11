@@ -4,6 +4,7 @@ from models import User, Student, Classroom, Assignment
 import os
 from dotenv import load_dotenv
 from email_validator import validate_email, EmailNotValidError
+from utils.decorators import login_required
 
 load_dotenv()
 
@@ -79,6 +80,7 @@ def login():
             session['logged_in'] = True
             session['user_id'] = user.id
             session['user_name'] = user.name
+            session['user_email'] = user.email
             session['user_role'] = user.role
 
             return redirect(url_for("user_bp.index"))
@@ -93,5 +95,23 @@ def login():
 def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)
+    session.pop('user_name', None)
+    session.pop('user_email', None)
     session.pop('user_role', None)
     return redirect(url_for("user_bp.index"))
+
+@user_bp.route('/edit_user')
+@login_required
+def edit_user():
+    if request.method == 'POST':
+        pass
+    
+    return render_template("edit_user.html")
+
+@user_bp.route('/edit_password')
+@login_required
+def edit_password():
+    if request.method == 'POST':
+        pass
+    
+    return render_template("edit_password.html")
