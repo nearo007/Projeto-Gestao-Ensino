@@ -91,6 +91,9 @@ def login():
             session['user_email'] = user.email
             session['user_role'] = user.role
 
+            if session['user_role'] == 'teacher':
+                return redirect(url_for("teacher_bp.teacher_home"))
+            
             return redirect(url_for("user_bp.index"))
             
         else:

@@ -49,6 +49,10 @@
       </div>
     </div>
 
+    <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}" class="btn btn-success d-flex align-items-center shadow-sm">
+      <i class="bi bi-person-plus me-2"></i> Adicionar
+    </a>
+
     <div class="d-flex justify-content-between">
       <a href="{{ url_for('teacher_bp.teacher_home') }}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left me-1"></i> Voltar

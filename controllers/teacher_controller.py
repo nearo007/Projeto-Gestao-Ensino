@@ -8,10 +8,14 @@ from utils.data_range import get_assignment_range
 teacher_bp = Blueprint('teacher_bp', __name__)
 
 # assignments
-@teacher_bp.route('/manage_assignments', methods=['GET', 'POST'])
+@teacher_bp.route('/manage_assignments/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required
-def manage_assignments():
-    assignments = Assignment.query.all()
+def manage_assignments(classroom_id):
+    if session['user_role'] == 'teacher':
+        assignments = Assignment.query.filter_by(teacher_id=session['user_id'], classroom_id=classroom_id).all()
+
+    else:
+        assignments = Assignment.query.filter_by(classroom_id=classroom_id)
 
     return render_template("assignment/manage_assignments.html", assignments=assignments)
     
