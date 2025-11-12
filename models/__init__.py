@@ -1,2 +1,2 @@
 from .admin import User, Student, Classroom
-from .teacher import Assignment
+from .teacher import Assignment, StudentAssignment

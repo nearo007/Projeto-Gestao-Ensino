@@ -1,11 +1,26 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash, session
 from extensions import db
-from models import Student, Classroom, Assignment, User
+from models import Student, Classroom, Assignment, User, StudentAssignment
 from datetime import datetime
 from utils.decorators import login_required, role_required
 from utils.data_range import get_assignment_range
 
 teacher_bp = Blueprint('teacher_bp', __name__)
+
+# teacher home
+@teacher_bp.route('/teacher_home', methods=['GET'])
+@login_required
+def teacher_home():
+    classrooms = Classroom.query.all()
+    teacher = User.query.get(session['user_id'])
+    teacher_classrooms = teacher.classrooms
+    return render_template('teacher_home.html', classrooms=classrooms, teacher_classrooms=teacher_classrooms)
+
+@teacher_bp.route('/classroom_details/<int:classroom_id>', methods=['GET'])
+@login_required
+def classroom_details(classroom_id):
+    classroom = Classroom.query.get(classroom_id)
+    return render_template('classroom/classroom_details.html', classroom=classroom)
 
 # assignments
 @teacher_bp.route('/manage_assignments/<int:classroom_id>', methods=['GET', 'POST'])
@@ -23,6 +38,7 @@ def manage_assignments(classroom_id):
 @teacher_bp.route('/create_assignment/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required
 def create_assignment(classroom_id):
+    classroom = Classroom.query.get(classroom_id)
     if request.method == 'POST':
         name = request.form['name']
         grade_worth = request.form['grade_worth']
@@ -33,16 +49,23 @@ def create_assignment(classroom_id):
         new_assignment = Assignment(name=name, grade_worth=grade_worth, due_date=due_date, teacher_id=teacher_id, classroom_id=classroom_id)
         db.session.add(new_assignment)
         db.session.commit()
+        
+        for student in classroom.students:
+            grade_entry = StudentAssignment(student_id=student.id, assignment_id=new_assignment.id, grade=0)
+            db.session.add(grade_entry)
+        
+        db.session.commit()
 
         return redirect(url_for("teacher_bp.manage_assignments", classroom_id=classroom_id))
 
     data_range = get_assignment_range()
-    return render_template("assignment/create_assignment.html", classroom_id=classroom_id, data_range=data_range)
+    return render_template("assignment/create_assignment.html", classroom=classroom, data_range=data_range)
 
 @teacher_bp.route("/delete_assignment/<int:assignment_id>", methods=['GET'])
 @login_required
 def delete_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
+    classroom = assignment.classroom
 
     if not assignment_id:
         return redirect(url_for("teacher_bp.manage_assignments"))
@@ -50,12 +73,13 @@ def delete_assignment(assignment_id):
     db.session.delete(assignment)
     db.session.commit()
 
-    return redirect(url_for("teacher_bp.manage_assignments"))
+    return redirect(url_for("teacher_bp.manage_assignments", classroom_id=classroom.id))
 
 @teacher_bp.route("/update_assignment/<int:assignment_id>", methods=['GET', 'POST'])
 @login_required
 def update_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
+    classroom = assignment.classroom
 
     if not assignment:
         return redirect(url_for("teacher_bp.manage_assignments"))
@@ -72,23 +96,34 @@ def update_assignment(assignment_id):
         assignment.due_date = assignment_due_date
 
         db.session.commit()
-        return redirect(url_for("teacher_bp.manage_assignments"))
+        return redirect(url_for("teacher_bp.manage_assignments", classroom_id=classroom.id))
     
     assignment_due_date = assignment.due_date.strftime('%Y-%m-%d')
     data_range = get_assignment_range()
     return render_template("assignment/update_assignment.html", assignment=assignment, assignment_due_date=assignment_due_date, data_range=data_range)
 
-# teacher home
-@teacher_bp.route('/teacher_home', methods=['GET'])
+@teacher_bp.route('/update_grades/<int:assignment_id>', methods=['GET', 'POST'])
 @login_required
-def teacher_home():
-    classrooms = Classroom.query.all()
-    teacher = User.query.get(session['user_id'])
-    teacher_classrooms = teacher.classrooms
-    return render_template('teacher_home.html', classrooms=classrooms, teacher_classrooms=teacher_classrooms)
+def update_grades(assignment_id):
+    assignment = Assignment.query.get_or_404(assignment_id)
+    classroom = assignment.classroom
 
-@teacher_bp.route('/classroom_details/<int:classroom_id>', methods=['GET'])
-@login_required
-def classroom_details(classroom_id):
-    classroom = Classroom.query.get(classroom_id)
-    return render_template('classroom/classroom_details.html', classroom=classroom)
+    if request.method == 'POST':
+        student_assignments = StudentAssignment.query.filter_by(assignment_id=assignment.id).all()
+
+        for sa in student_assignments:
+            field_name = f"grade_{sa.student.id}"
+            grade_value = request.form.get(field_name)
+
+            if grade_value is not None and grade_value.strip() != "":
+                try:
+                    sa.grade = float(grade_value)
+                except ValueError:
+                    flash(f"Nota inválida para {sa.student.name}.", "warning")
+                    continue
+
+        db.session.commit()
+        return redirect(url_for('teacher_bp.update_grades', assignment_id=assignment.id))
+
+    student_assignments = StudentAssignment.query.filter_by(assignment_id=assignment.id).all()
+    return render_template('assignment/update_grades.html', assignment=assignment, classroom=classroom, student_assignments=student_assignments)

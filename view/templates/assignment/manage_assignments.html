@@ -20,10 +20,11 @@
       <table class="table table-hover table-bordered align-middle bg-white mb-0">
         <thead class="table-primary text-center">
           <tr>
-            <th style="width: 10%">ID</th>
-            <th style="width: 35%">Nome</th>
+            <th style="width: 8%">ID</th>
+            <th style="width: 30%">Nome</th>
             <th style="width: 10%">Valor</th>
-            <th style="width: 25%">Data de Entrega</th>
+            <th style="width: 22%">Data de Entrega</th>
+            <th style="width: 10%">Avaliar</th>
             <th style="width: 10%">Editar</th>
             <th style="width: 10%">Remover</th>
           </tr>
@@ -34,13 +35,23 @@
               <td class="text-center">{{ assignment.id }}</td>
               <td>{{ assignment.name }}</td>
               <td class="text-center">{{ assignment.grade_worth }}</td>
-              <td>{{ assignment.due_date.strftime("%d/%m/%Y") }}</td>
+              <td class="text-center">{{ assignment.due_date.strftime("%d/%m/%Y") }}</td>
+
+              <td class="text-center">
+                <a href="{{ url_for('teacher_bp.update_grades', assignment_id=assignment.id) }}"
+                   class="text-success fw-bold"
+                   title="Avaliar alunos">
+                  <i class="bi bi-clipboard-check-fill"></i>
+                </a>
+              </td>
+
               <td class="text-center">
                 <a href="{{ url_for('teacher_bp.update_assignment', assignment_id=assignment.id)}}" 
                    class="text-primary" title="Editar">
                   <i class="bi bi-pencil-fill"></i>
                 </a>
               </td>
+
               <td class="text-center">
                 <a href="{{ url_for('teacher_bp.delete_assignment', assignment_id=assignment.id)}}"
                    onclick="return confirm('Tem certeza que deseja remover {{ assignment.name }}? Esta ação não pode ser desfeita.');"

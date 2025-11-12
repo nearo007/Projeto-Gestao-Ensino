@@ -13,3 +13,14 @@ class Assignment(db.Model):
 
     teacher = db.relationship('User', backref='assignments')
     classroom = db.relationship('Classroom', backref='assignments')
+    
+class StudentAssignment(db.Model):
+    __tablename__ = 'student_assignments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
+    assignment_id = db.Column(db.Integer, db.ForeignKey('assignments.id'), nullable=False)
+    grade = db.Column(db.Float, nullable=True)
+
+    student = db.relationship('Student', backref='student_assignments')
+    assignment = db.relationship('Assignment', backref='student_assignments')
