@@ -1,9 +1,13 @@
-from flask import render_template, request, redirect, url_for, Blueprint, flash, session
+from flask import render_template, request, redirect, url_for, Blueprint, flash, session, current_app, send_from_directory
 from extensions import db
 from models import Student, Classroom, Assignment, User, StudentAssignment
 from datetime import datetime
+import os
+from werkzeug.utils import secure_filename
+
 from utils.decorators import login_required, role_required
 from utils.data_range import get_assignment_range
+from utils.files import allowed_file, save_assignment_pdf
 
 teacher_bp = Blueprint('teacher_bp', __name__)
 
@@ -45,8 +49,11 @@ def create_assignment(classroom_id):
         due_date_string = request.form['due_date']
         due_date = datetime.strptime(due_date_string, '%Y-%m-%d').date()
         teacher_id = request.form['teacher_id']
+        
+        file = request.files.get("file")
+        saved_file = save_assignment_pdf(file)
 
-        new_assignment = Assignment(name=name, grade_worth=grade_worth, due_date=due_date, teacher_id=teacher_id, classroom_id=classroom_id)
+        new_assignment = Assignment(name=name, grade_worth=grade_worth, due_date=due_date, file=saved_file, teacher_id=teacher_id, classroom_id=classroom_id)
         db.session.add(new_assignment)
         db.session.commit()
         
@@ -60,6 +67,13 @@ def create_assignment(classroom_id):
 
     data_range = get_assignment_range()
     return render_template("assignment/create_assignment.html", classroom=classroom, data_range=data_range)
+
+@teacher_bp.route('/download/<filename>')
+@login_required
+def download_file(filename):
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+    return send_from_directory(upload_folder, filename, as_attachment=True)
+
 
 @teacher_bp.route("/delete_assignment/<int:assignment_id>", methods=['GET'])
 @login_required

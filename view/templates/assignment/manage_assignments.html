@@ -26,6 +26,7 @@
               <th style="width: 30%">Nome</th>
               <th style="width: 10%">Valor</th>
               <th style="width: 22%">Data de Entrega</th>
+              <th style="width: 10%">Arquivo</th>
               <th style="width: 10%">Notas</th>
               <th style="width: 10%">Editar</th>
               <th style="width: 10%">Remover</th>
@@ -38,6 +39,14 @@
                 <td>{{ assignment.name }}</td>
                 <td class="text-center">{{ assignment.grade_worth }}</td>
                 <td class="text-center">{{ assignment.due_date.strftime('%d/%m/%Y') }}</td>
+
+                <td class="text-center">
+                  {% if assignment.file %}
+                    <a href="{{ url_for('teacher_bp.download_file', filename=assignment.file) }}" class="text-primary" title="Baixar arquivo"><i class="bi bi-file-earmark-arrow-down-fill" style="font-size: 1.3rem;"></i></a>
+                  {% else %}
+                    <i class="bi bi-file-earmark-arrow-down-fill text-secondary" style="font-size: 1.3rem;" title="Nenhum arquivo disponível"></i>
+                  {% endif %}
+                </td>
 
                 <td class="text-center">
                   <a href="{{ url_for('teacher_bp.update_grades', assignment_id=assignment.id) }}" class="text-success fw-bold" title="Avaliar alunos"><i class="bi bi-clipboard-check-fill"></i></a>

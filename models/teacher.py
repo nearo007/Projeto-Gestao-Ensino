@@ -8,6 +8,8 @@ class Assignment(db.Model):
     grade_worth = db.Column(db.Integer, nullable=True)
     due_date = db.Column(db.DateTime, nullable=True)
     
+    file = db.Column(db.String(255), nullable=True)
+
     teacher_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'), nullable=False)
 

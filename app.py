@@ -6,9 +6,10 @@ from controllers.user_controller import user_bp
 from controllers.teacher_controller import teacher_bp
 from controllers.admin_controller import admin_bp
 
-
 # instanciando o Flask, definindo templates
 app = Flask(__name__, template_folder=os.path.join('view', 'templates'))
+
+app.config['UPLOAD_FOLDER'] = os.path.join("uploads", "assignments")
 
 # configurando o db
 app.config.from_object(Config)
