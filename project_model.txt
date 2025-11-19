@@ -1,6 +1,3 @@
-CRUD
-login (não conta)
-
 MUDANÇA
 Para simplificar, aluno não terá acesso ao sistema, é um controle fechado da instituição.
 
@@ -9,10 +6,18 @@ o administrador gerencia os alunos, turmas e professores, mas também tem permis
 os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que fazem parte da turma atrelada ao próprio professor.
 
 *** IMPORTANTE ***
-adicionar lembrar senha (pode ser com localStorage())
+download upload
 
 adicionar API (pode ser obter um json)
 
-remover flash desnecessários que stackam na tela de login
-
 verificação quando alterar a nota maxima para uma menor que obtida por aluno
+
+3 telas antes do login
+
+FLUXO
+admin CRUD: alunos, salas e professores (falta professores)
+professor CRUD: tarefas e notas ///
+
+banco de dados
+
+remover flash desnecessários que stackam na tela de login (praticamente feito, mas verificar no final)
