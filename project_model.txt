@@ -22,11 +22,12 @@ remover flash desnecessários que stackam na tela de login (praticamente feito, 
 
 adicionar API (pode ser obter um json)
 
-*** IMPORTANTE ***
 adicionar tela, onde o professor pode ver detalhes de um aluno (todas as atividades e com a nota, e a soma final)
+
+*** IMPORTANTE ***
 
 quando altera o aluno pra outra sala precisa zerar a relação student assignments
 
-botao voltar no classroom deve mudar destino se for admin
+admin não consegue ver as notas pelo student details
 
 banco de dados

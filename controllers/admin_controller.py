@@ -102,6 +102,8 @@ def update_student(student_id):
     if not student:
         return redirect(url_for("admin_bp.manage_students"))
     
+    old_classroom = student.classroom
+    
     if request.method == 'POST':
         student_name = request.form['name']
         student_email= request.form['email']
@@ -116,6 +118,20 @@ def update_student(student_id):
         except EmailNotValidError:
             flash("O email inserido é inválido!", "danger")
             return redirect(url_for("admin_bp.update_student", student_id=student_id))
+        
+        if old_classroom.id != student_classroom.id:
+            for assignment in old_classroom.assignments:
+                for sa in assignment.student_assignments:
+                    if sa.student_id == student.id:
+                        db.session.delete(sa)
+    
+            for assignment in student_classroom.assignments:
+                new_sa = StudentAssignment(
+                    student_id=student.id,
+                    assignment_id=assignment.id,
+                    grade=0
+                )
+                db.session.add(new_sa)
 
         student.name = student_name
         student.email = student_email
