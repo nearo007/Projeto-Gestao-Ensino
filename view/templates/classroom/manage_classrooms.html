@@ -11,6 +11,10 @@
       <a href="{{ url_for('user_bp.index') }}" class="btn btn-outline-secondary">Voltar</a>
       <a href="{{ url_for('admin_bp.create_classroom') }}" class="btn btn-success d-flex align-items-center shadow-sm"><i class="bi bi-person-plus me-2"></i> Adicionar</a>
     </div>
+        
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <p class="text-{{ category }} small m-0">{{ message }}</p>
+    {% endfor %}
 
     {% if classrooms %}
       <div class="table-responsive shadow-sm rounded">

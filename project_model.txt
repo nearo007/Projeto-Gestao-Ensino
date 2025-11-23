@@ -24,10 +24,10 @@ adicionar API (pode ser obter um json)
 
 adicionar tela, onde o professor pode ver detalhes de um aluno (todas as atividades e com a nota, e a soma final)
 
-*** IMPORTANTE ***
+admin não consegue ver as notas pelo student details
 
 quando altera o aluno pra outra sala precisa zerar a relação student assignments
 
-admin não consegue ver as notas pelo student details
-
+*** IMPORTANTE ***
 banco de dados
+testar apagar sala pra ver se apaga studentAss/Assignements

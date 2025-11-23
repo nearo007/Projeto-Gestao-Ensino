@@ -5,6 +5,7 @@ from datetime import datetime
 from utils.decorators import role_required
 from utils.data_range import get_age_range
 from email_validator import validate_email, EmailNotValidError
+from sqlalchemy.exc import IntegrityError
 
 admin_bp = Blueprint('admin_bp', __name__)
 
@@ -211,9 +212,21 @@ def delete_classroom(classroom_id):
     if not classroom:
         return redirect(url_for("admin_bp.manage_classrooms"))
     
-    db.session.delete(classroom)
-    db.session.commit()
+    try:
+        for assignment in classroom.assignments:
+            db.session.delete(assignment)
+
+        if classroom.students:
+            flash("Há estudantes atrelados a esta sala!", "danger")
+            return redirect(url_for("admin_bp.manage_classrooms"))
+        
+        db.session.delete(classroom)
+        db.session.commit()
     
+    except IntegrityError:
+        db.session.rollback()
+        flash("Não foi possível excluir a sala.", "danger")
+        
     return redirect(url_for("admin_bp.manage_classrooms"))
 
 @admin_bp.route('/update_classroom/<int:classroom_id>', methods=['GET', 'POST'])

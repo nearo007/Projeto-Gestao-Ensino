@@ -89,7 +89,7 @@ def register():
             
         db.session.add(new_user)
         db.session.commit()
-        return redirect("/")
+        return redirect(url_for("user_bp.login"))
 
     return render_template("register.html")
 
