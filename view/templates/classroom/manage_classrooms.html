@@ -5,61 +5,60 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5" style="max-width: 1000px;">
-  
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="fw-bold text-primary m-0">Lista de Turmas</h1>
-    <a href="{{ url_for('admin_bp.create_classroom') }}" class="btn btn-success d-flex align-items-center shadow-sm">
-      <i class="bi bi-person-plus me-2"></i> Adicionar
-    </a>
-  </div>
+  <div class="container mt-5" style="max-width: 1000px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="fw-bold text-primary m-0">Lista de Turmas</h1>
+      <a href="{{ url_for('user_bp.index') }}" class="btn btn-outline-secondary">Voltar</a>
+      <a href="{{ url_for('admin_bp.create_classroom') }}" class="btn btn-success d-flex align-items-center shadow-sm"><i class="bi bi-person-plus me-2"></i> Adicionar</a>
+    </div>
+        
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <p class="text-{{ category }} small m-0">{{ message }}</p>
+    {% endfor %}
 
-  {% if classrooms %}
-    <div class="table-responsive shadow-sm rounded">
-      <table class="table table-hover table-bordered align-middle bg-white mb-0">
-        <thead class="table-primary text-center">
-          <tr>
-            <th style="width: 10%">ID</th>
-            <th style="width: 30%">Nome</th>
-            <th style="width: 40%">Professores</th>
-            <th style="width: 10%">Editar</th>
-            <th style="width: 10%">Remover</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for classroom in classrooms %}
+    {% if classrooms %}
+      <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover table-bordered align-middle bg-white mb-0">
+          <thead class="table-primary text-center">
             <tr>
-              <td class="text-center">{{ classroom.id }}</td>
-              <td>{{ classroom.name }}</td>
-
-              <td>
-                {% for teacher in classroom.teachers %}
-                  {{ teacher.name }}
-                {% endfor %}
-              </td>
-
-              <td class="text-center">
-                <a href="{{ url_for('admin_bp.update_classroom', classroom_id=classroom.id)}}"
-                   class="text-primary" title="Editar">
-                  <i class="bi bi-pencil-fill"></i>
-                </a>
-              </td>
-              <td class="text-center">
-                <a href="{{ url_for('admin_bp.delete_classroom', classroom_id=classroom.id)}}"
-                   onclick="return confirm('Tem certeza que deseja remover {{ classroom.name }}? Esta ação não pode ser desfeita.');"
-                   class="text-danger" title="Remover">
-                  <i class="bi bi-trash-fill"></i>
-                </a>
-              </td>
+              <th style="width: 10%">ID</th>
+              <th style="width: 30%">Nome</th>
+              <th style="width: 40%">Professores</th>
+              <th style="width: 10%">Tarefas</th>
+              <th style="width: 10%">Editar</th>
+              <th style="width: 10%">Remover</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  {% else %}
-    <div class="alert alert-warning text-center shadow-sm mt-4">
-      Nenhuma Turma cadastrada ainda.
-    </div>
-  {% endif %}
-</div>
+          </thead>
+          <tbody>
+            {% for classroom in classrooms %}
+              <tr>
+                <td class="text-center">{{ classroom.id }}</td>
+                <td>{{ classroom.name }}</td>
+
+                <td>
+                  {% for teacher in classroom.teachers %}
+                    {{ teacher.name }}
+                  {% endfor %}
+                </td>
+
+                <td class="text-center">
+                  <a href="{{ url_for('teacher_bp.manage_assignments', classroom_id=classroom.id) }}" class="text-success" title="Tarefas"><i class="bi bi-bookmark-fill"></i></a>
+                </td>
+
+                <td class="text-center">
+                  <a href="{{ url_for('admin_bp.update_classroom', classroom_id=classroom.id) }}" class="text-primary" title="Editar"><i class="bi bi-pencil-fill"></i></a>
+                </td>
+
+                <td class="text-center">
+                  <a href="{{ url_for('admin_bp.delete_classroom', classroom_id=classroom.id) }}" onclick="return confirm('Tem certeza que deseja remover {{ classroom.name }}? Esta ação não pode ser desfeita.');" class="text-danger" title="Remover"><i class="bi bi-trash-fill"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="alert alert-warning text-center shadow-sm mt-4">Nenhuma turma cadastrada ainda.</div>
+    {% endif %}
+  </div>
 {% endblock %}

@@ -1,5 +1,7 @@
-CRUD
-login (não conta)
+ENV:
+TEACHER_REGISTER_CODE=123
+ADMIN_REGISTER_CODE=456
+
 
 MUDANÇA
 Para simplificar, aluno não terá acesso ao sistema, é um controle fechado da instituição.
@@ -8,9 +10,29 @@ o administrador gerencia os alunos, turmas e professores, mas também tem permis
 
 os professores apenas gerenciam as tarefas, e atribuem notas aos alunos que fazem parte da turma atrelada ao próprio professor.
 
-*** IMPORTANTE ***
-adicionar lembrar senha (pode ser com localStorage())
+se criar a atividade antes do aluno estar atrelado a tuma ele não aparece na tela de notas (tando de avaliação do professor quanto leitura do admin)
+
+download upload (finalizado?)
+
+admin CRUD: alunos, salas e professores (falta professores, sem editar)
+
+3 telas antes do login
+
+remover flash desnecessários que stackam na tela de login (praticamente feito, mas verificar no final)
 
 adicionar API (pode ser obter um json)
 
-remover flash desnecessários que stackam na tela de login
+adicionar tela, onde o professor pode ver detalhes de um aluno (todas as atividades e com a nota, e a soma final)
+
+admin não consegue ver as notas pelo student details
+
+
+banco de dados
+
+testar apagar sala pra ver se apaga studentAss/Assignements
+
+apagar tarefa dando bolete
+
+quando altera o aluno pra outra sala precisa zerar a relação student assignments
+
+*** IMPORTANTE ***
