@@ -26,8 +26,13 @@ adicionar tela, onde o professor pode ver detalhes de um aluno (todas as ativida
 
 admin não consegue ver as notas pelo student details
 
+
+banco de dados
+
+testar apagar sala pra ver se apaga studentAss/Assignements
+
+apagar tarefa dando bolete
+
 quando altera o aluno pra outra sala precisa zerar a relação student assignments
 
 *** IMPORTANTE ***
-banco de dados
-testar apagar sala pra ver se apaga studentAss/Assignements

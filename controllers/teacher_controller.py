@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Blueprint, flash, session, current_app, send_from_directory
+from flask import render_template, request, redirect, url_for, Blueprint, flash, session, current_app, send_from_directory, abort
 from extensions import db
 from models import Student, Classroom, Assignment, User, StudentAssignment
 from datetime import datetime
@@ -23,13 +23,15 @@ def teacher_home():
 @teacher_bp.route('/classroom_details/<int:classroom_id>', methods=['GET'])
 @login_required
 def classroom_details(classroom_id):
-    classroom = Classroom.query.get(classroom_id)
+    classroom = Classroom.query.get_or_404(classroom_id)
     return render_template('classroom/classroom_details.html', classroom=classroom)
 
 # assignments
 @teacher_bp.route('/manage_assignments/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required
 def manage_assignments(classroom_id):
+    classroom = Classroom.query.get_or_404(classroom_id)
+
     if session['user_role'] == 'teacher':
         assignments = Assignment.query.filter_by(teacher_id=session['user_id'], classroom_id=classroom_id).all()
 
@@ -73,7 +75,8 @@ def teacher_student_details(student_id):
 @teacher_bp.route('/create_assignment/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required
 def create_assignment(classroom_id):
-    classroom = Classroom.query.get(classroom_id)
+    classroom = Classroom.query.get_or_404(classroom_id)
+    
     if request.method == 'POST':
         name = request.form['name']
         grade_worth = request.form['grade_worth']
@@ -110,10 +113,11 @@ def download_file(filename):
 @login_required
 def delete_assignment(assignment_id):
     assignment = Assignment.query.get(assignment_id)
-    classroom = assignment.classroom
 
     if not assignment:
         return redirect(url_for("teacher_bp.manage_assignments"))
+    
+    classroom = assignment.classroom
     
     db.session.delete(assignment)
     db.session.commit()

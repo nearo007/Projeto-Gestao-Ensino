@@ -23,7 +23,7 @@ class StudentAssignment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
-    assignment_id = db.Column(db.Integer, db.ForeignKey('assignments.id'), nullable=False)
+    assignment_id = db.Column(db.Integer, db.ForeignKey('assignments.id', ondelete='CASCADE'), nullable=False)
     grade = db.Column(db.Float, nullable=True)
 
     student = db.relationship('Student', backref='student_assignments')
