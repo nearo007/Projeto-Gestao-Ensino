@@ -2,3 +2,4 @@
 .devdbrc
 __pycache__/
 .vscode
+venv
