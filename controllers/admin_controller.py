@@ -34,7 +34,6 @@ def delete_teacher(teacher_id):
     
     return redirect(url_for("admin_bp.manage_teachers"))
 
-# student
 @admin_bp.route('/manage_students', methods=['GET'])
 @role_required('admin')
 def manage_students():
@@ -174,7 +173,6 @@ def admin_student_details(student_id):
 
     return render_template("student/admin_student_details.html", student=student, assignments_by_teacher=assignments_by_teacher, teacher_avgs=teacher_avgs)
 
-# classroom
 @admin_bp.route('/manage_classrooms', methods=['GET'])
 @role_required('admin')
 def manage_classrooms():
@@ -187,7 +185,7 @@ def manage_classrooms():
 def create_classroom():
     if request.method == 'POST':
         name = request.form['name']
-        teacher_ids = request.form.getlist('teachers') # [0, 1, 2] (ids)
+        teacher_ids = request.form.getlist('teachers')
 
         new_classroom = Classroom(name=name)
         db.session.add(new_classroom)
@@ -239,7 +237,7 @@ def update_classroom(classroom_id):
     
     if request.method == 'POST':
         classroom_name = request.form['name']
-        teacher_ids = request.form.getlist('teachers') # [0, 1, 2] (ids)
+        teacher_ids = request.form.getlist('teachers')
 
         classroom.name = classroom_name
         

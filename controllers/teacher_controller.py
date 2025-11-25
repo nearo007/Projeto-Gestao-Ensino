@@ -11,7 +11,6 @@ from utils.files import allowed_file, save_assignment_pdf
 
 teacher_bp = Blueprint('teacher_bp', __name__)
 
-# teacher home
 @teacher_bp.route('/teacher_home', methods=['GET'])
 @login_required
 def teacher_home():
@@ -26,7 +25,6 @@ def classroom_details(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
     return render_template('classroom/classroom_details.html', classroom=classroom)
 
-# assignments
 @teacher_bp.route('/manage_assignments/<int:classroom_id>', methods=['GET', 'POST'])
 @login_required
 def manage_assignments(classroom_id):
