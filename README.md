@@ -4,7 +4,7 @@ Este projeto é uma aplicação web desenvolvida em Python utilizando o framewor
 
 A arquitetura do projeto segue o padrão MVC (Model-View-Controller), garantindo uma organização clara entre a lógica de negócio, a interface do utilizador e a gestão de dados.
 
-<img width="1455" height="692" alt="Screenshot 2025-11-28 121515" src="https://github.com/user-attachments/assets/6c543d0b-3c2d-402f-8146-ca9a9fc35889" />
+<div align="center"> <img width="1160" height="550" alt="Screenshot 2025-11-28 121515" src="https://github.com/user-attachments/assets/6c543d0b-3c2d-402f-8146-ca9a9fc35889" /> </div>
 
 ## Contexto Académico
 Este software foi desenvolvido como parte dos requisitos do 6º período de Engenharia de Software na Unisenai, para a disciplina de Backend Development.
@@ -23,8 +23,8 @@ O sistema possui um controlo de acesso baseado em cargos (Role-Based Access Cont
 
     Gestão de Sessão: O sistema mantém o utilizador logado e suporta a funcionalidade de "Lembrar senha".
 
-### Tela de Registro e Login
-<img width="906" height="809" alt="Screenshot 2025-11-28 121705" src="https://github.com/user-attachments/assets/055b1cb3-3e89-4a62-b992-06b931022971" /><img width="650" height="686" alt="Screenshot 2025-11-28 121729" src="https://github.com/user-attachments/assets/02d4db8d-4688-43aa-9ae9-80a20292c728" />
+### Tela de Registro
+<div align="center"> <img width="725" height="650" alt="Screenshot 2025-11-28 121705" src="https://github.com/user-attachments/assets/055b1cb3-3e89-4a62-b992-06b931022971" /> </div>
 
 ## Painel do Administrador
 
@@ -39,10 +39,10 @@ O administrador tem a visão global da instituição e gere a estrutura base:
     Monitorização: Acesso aos detalhes de desempenho dos alunos, visualizando as notas atribuídas pelos professores em diferentes atividades.
 
 ### Tela de Gerenciamento de Turmas
-<img width="1385" height="569" alt="Screenshot 2025-11-28 121928" src="https://github.com/user-attachments/assets/99aeed12-31e5-4b32-8071-0d7fa0c9e22f" />
+<div align="center"> <img width="1100" height="450" alt="Screenshot 2025-11-28 121928" src="https://github.com/user-attachments/assets/99aeed12-31e5-4b32-8071-0d7fa0c9e22f" /> </div>
 
 ### Tela de Criação de um Novo Estudante
-<img width="718" height="571" alt="Screenshot 2025-11-28 123028" src="https://github.com/user-attachments/assets/0576d4d7-1ecd-44f8-98c5-f186d6b0689d" />
+<div align="center"> <img width="570" height="450" alt="Screenshot 2025-11-28 123028" src="https://github.com/user-attachments/assets/0576d4d7-1ecd-44f8-98c5-f186d6b0689d" /> </div>
 
 ## Painel do Professor
 
@@ -61,16 +61,16 @@ O professor gere o conteúdo académico das turmas às quais está vinculado:
     Relatórios de Turma: Visualização do progresso dos alunos da sua turma.
 
 ### Tela Inicial do Professor (Turmas Vinculadas)
-<img width="1387" height="585" alt="Screenshot 2025-11-28 122040" src="https://github.com/user-attachments/assets/869b24fe-3e70-417a-aecf-c513ab2fb078" />
+<div align="center"> <img width="1100" height="465" alt="Screenshot 2025-11-28 122040" src="https://github.com/user-attachments/assets/869b24fe-3e70-417a-aecf-c513ab2fb078" /> </div>
 
 ### Tela Detalhada da Turma
-<img width="1351" height="884" alt="Screenshot 2025-11-28 122242" src="https://github.com/user-attachments/assets/f0be4459-1ebd-4ae5-9bce-89b51b1d212f" />
+<div align="center"> <img width="1080" height="705" alt="Screenshot 2025-11-28 122242" src="https://github.com/user-attachments/assets/f0be4459-1ebd-4ae5-9bce-89b51b1d212f" /> </div>
 
 ### Tela para Avaliação de uma Atividade
-<img width="949" height="486" alt="Screenshot 2025-11-28 122305" src="https://github.com/user-attachments/assets/b2af0e01-80d4-42ef-8bd0-965702fb5fea" />
+<div align="center"> <img width="760" height="390" alt="Screenshot 2025-11-28 122305" src="https://github.com/user-attachments/assets/b2af0e01-80d4-42ef-8bd0-965702fb5fea" /> </div>
 
 ### Tela para Observar o Desenpenho do Aluno
-<img width="1341" height="724" alt="Screenshot 2025-11-28 122852" src="https://github.com/user-attachments/assets/5246e13f-5b3e-468f-a651-12312ac27778" />
+<div align="center"> <img width="1070" height="580" alt="Screenshot 2025-11-28 122852" src="https://github.com/user-attachments/assets/5246e13f-5b3e-468f-a651-12312ac27778" /> </div>
 
 ## API Integrada
 
@@ -83,7 +83,7 @@ O backend disponibiliza endpoints que retornam dados em formato JSON, permitindo
     Informações dos Professores. Esta estrutura facilita futuras integrações ou o desenvolvimento de novos frontends.
 
 ### Teste da API que Retorna Todos os Estudantes
-<img width="619" height="440" alt="image" src="https://github.com/user-attachments/assets/d5200262-916a-4541-b511-38502a4198c0" />
+<div align="center"> <img width="495" height="350" alt="image" src="https://github.com/user-attachments/assets/d5200262-916a-4541-b511-38502a4198c0" /> </div>
 
 
 ## Tecnologias Utilizadas
